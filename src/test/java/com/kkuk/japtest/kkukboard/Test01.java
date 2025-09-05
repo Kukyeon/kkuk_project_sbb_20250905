@@ -59,4 +59,12 @@ public class Test01 {
 		assertEquals("sbb가 무엇인가요?", question.getSubject());
 	}
 	}
+	//질문글 제목으로 테스트
+	@Test
+	@DisplayName("질문글 제목으로 테스트하기")
+	public void testJpa4() {
+		Question question = questionRepository.findBySubject("sbb가 무엇인가요?");
+		assertEquals(4, question.getId());
+		
+	}
 }

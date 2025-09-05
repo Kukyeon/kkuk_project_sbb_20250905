@@ -6,4 +6,9 @@ import com.kkuk.japtest.kkukboard.entity.Question;
 
 public interface QuestionRepository extends JpaRepository<Question, Integer>{
 
+	
+	public Question findBySubject(String subject);
+	
+	
+	
 }
