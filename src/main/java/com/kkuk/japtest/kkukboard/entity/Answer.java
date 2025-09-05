@@ -29,7 +29,7 @@ public class Answer {
 	@Column(columnDefinition = "TEXT")
 	private String content; // 답변게시판 내용
 	
-	@CreatedDate
+	
 	private LocalDateTime creatDate;
 	
 	//N:1 관계 - > 답변 : 질문 -> @ManyToOne

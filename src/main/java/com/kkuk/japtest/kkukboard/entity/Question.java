@@ -34,7 +34,7 @@ public class Question {
 	@Column(columnDefinition = "TEXT")
 	private String content; //질문게시판의 내용
 	
-	@CreatedDate
+	
 	private LocalDateTime createDate;
 	
 	//1:N 관계 -> 질문:답변들 -> @OneToMany
