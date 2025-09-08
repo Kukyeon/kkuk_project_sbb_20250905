@@ -39,7 +39,7 @@ public class Answer {
 	private String content; // 답변게시판 내용
 	
 	
-	private LocalDateTime creatdate;
+	private LocalDateTime createdate;
 	
 	//N:1 관계 - > 답변 : 질문 -> @ManyToOne
 	@ManyToOne
