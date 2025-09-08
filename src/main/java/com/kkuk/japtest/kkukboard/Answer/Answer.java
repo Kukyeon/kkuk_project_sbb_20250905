@@ -1,8 +1,9 @@
-package com.kkuk.japtest.kkukboard.entity;
+package com.kkuk.japtest.kkukboard.Answer;
 
 import java.time.LocalDateTime;
 
-import org.springframework.data.annotation.CreatedDate;
+
+import com.kkuk.japtest.kkukboard.Question.Question;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

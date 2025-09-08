@@ -1,12 +1,10 @@
-package com.kkuk.japtest.kkukboard.repository;
+package com.kkuk.japtest.kkukboard.Question;
 
 import java.util.List;
 
 import javax.swing.Spring;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.kkuk.japtest.kkukboard.entity.Question;
 
 public interface QuestionRepository extends JpaRepository<Question, Integer>{
 

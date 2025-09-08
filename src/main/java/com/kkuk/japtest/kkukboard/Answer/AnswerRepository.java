@@ -1,8 +1,6 @@
-package com.kkuk.japtest.kkukboard.repository;
+package com.kkuk.japtest.kkukboard.Answer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import com.kkuk.japtest.kkukboard.entity.Answer;
 
 public interface AnswerRepository extends JpaRepository<Answer, Integer>{
 
