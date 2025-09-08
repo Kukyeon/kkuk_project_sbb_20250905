@@ -1,9 +1,8 @@
-package com.kkuk.japtest.kkukboard.Answer;
+package com.kkuk.japtest.kkukboard.answer;
 
 import java.time.LocalDateTime;
 
-
-import com.kkuk.japtest.kkukboard.Question.Question;
+import com.kkuk.japtest.kkukboard.question.Question;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

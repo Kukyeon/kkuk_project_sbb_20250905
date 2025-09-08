@@ -1,4 +1,4 @@
-package com.kkuk.japtest.kkukboard.Answer;
+package com.kkuk.japtest.kkukboard.answer;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

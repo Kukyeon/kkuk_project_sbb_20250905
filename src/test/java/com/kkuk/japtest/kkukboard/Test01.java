@@ -12,8 +12,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.kkuk.japtest.kkukboard.Question.Question;
-import com.kkuk.japtest.kkukboard.Question.QuestionRepository;
+import com.kkuk.japtest.kkukboard.question.Question;
+import com.kkuk.japtest.kkukboard.question.QuestionRepository;
 
 @SpringBootTest
 public class Test01 {

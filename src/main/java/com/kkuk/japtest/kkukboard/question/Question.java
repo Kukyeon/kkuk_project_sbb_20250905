@@ -1,11 +1,9 @@
-package com.kkuk.japtest.kkukboard.Question;
+package com.kkuk.japtest.kkukboard.question;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-
-
-import com.kkuk.japtest.kkukboard.Answer.Answer;
+import com.kkuk.japtest.kkukboard.answer.Answer;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

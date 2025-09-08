@@ -1,4 +1,4 @@
-package com.kkuk.japtest.kkukboard.Question;
+package com.kkuk.japtest.kkukboard.question;
 
 import java.util.List;
 
