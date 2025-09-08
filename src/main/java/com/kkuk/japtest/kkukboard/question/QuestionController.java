@@ -7,7 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/question") //prefix(접두사)
@@ -45,7 +47,16 @@ public class QuestionController {
 		return "question_detail"; //타임리프 html의 이름
 	}
 	
+	@GetMapping(value = "/create") //질묹등록 폼만 매핑해주는 메서드->get
+	public String questionCreate() {
+		return "question_form";
+	}
 	
-	
+	@PostMapping(value = "/create")//질묹등록 폼만 매핑해주는 메서드->post
+	public String questionCreate(@RequestParam(value = "subject") String subject,@RequestParam(value = "content") String content) {
+		
+		
+		return "redirect:/question/list";
+	}
 	
 }

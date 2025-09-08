@@ -1,9 +1,10 @@
-<html  layout:decorate="~{layout}">
-	<div class="container my-3">
+
+<html layout:decorate="~{layout}">
+	<div layout:fragment="content" class="container my-3">
 		<!-- 질문 내용 -->	
 		<h2 class="border-bottom py-2" th:text="${question.subject}">제목</h2>		
 		
-		<div layout:fragment="content" class="card my-3">
+		<div class="card my-3">
 			<div class="card-body">
 				<div class="card-text" style="white-space: pre-line;"
 				th:text="${question.content}">내용</div>
