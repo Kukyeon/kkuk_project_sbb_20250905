@@ -1,6 +1,7 @@
 package com.kkuk.japtest.kkukboard.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,12 +31,24 @@ public class UserController {
 		if(!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
 			bindingResult.rejectValue("password2", "passwordInCorrect","비밀번호가 일치하지않습니다.");
 			return "signup_form";
-		}	
-		userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword1());
+		}
+		try {
+			userService.create(userCreateForm.getUsername(), userCreateForm.getEmail(), userCreateForm.getPassword1());
+		} catch (DataIntegrityViolationException e) { //중복된 데이터에 대한 예외처리
+			e.printStackTrace();
+			//이미 등록된 사용자 아이디일경유 발생하는 에러 추가
+			bindingResult.rejectValue("signupFailed","이미 등록된 ID입니다.");
+			return "signup_form";
+		} catch (Exception e) { // 기타 예외처리
+			e.printStackTrace();
+			bindingResult.rejectValue("signupFailed","회원가입실패");
+			return "signup_form";
+		}
+		
 			
 		
 		
-		return "rediect:/"; //첫화면으로 이동
+		return "redirect:/question/list"; //첫화면으로 이동
 	}
 	
 }
