@@ -19,6 +19,10 @@ public class SecurityConfig {
 	      http
 	         .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
 	               .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
+	        .formLogin((formLogin) -> formLogin //스프링 시큐리티에서 로그인 설정
+	        	.loginPage("/user/login") // 로그인 요청
+	        	.defaultSuccessUrl("/")) // 로그인 성공시 이동페이지 지정
+	         
 	         ;
 	      return http.build();
 	   }

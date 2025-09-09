@@ -31,12 +31,12 @@ public class SiteUser {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQ_GENERATOR")
 	private Long id; // 유저번호 기본키
 	
-	@Column(unique = true) // 아이디는 중복 불가
+	@Column(name = "username" ,unique = true) // 아이디는 중복 불가
 	private String username; // 유저 아이디(이름)
 	
 	private String password;
 	
-	@Column(unique = true) // 이메일도 중복 불가
+	@Column(name = "email" ,unique = true) // 이메일도 중복 불가
 	private String email;
 	
 	
