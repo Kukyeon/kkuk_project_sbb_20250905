@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.swing.Spring;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface QuestionRepository extends JpaRepository<Question, Integer>{
@@ -18,5 +20,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer>{
 	public List<Question> findBySubjectLike(String keyword); // 특정 단어가 포함된 레코드 반환
 	//select * from question where subject Like %?%
 	
+	//페이징 관련
+	//public Page<Question> findAll(Pageable pageable);
 	
 }

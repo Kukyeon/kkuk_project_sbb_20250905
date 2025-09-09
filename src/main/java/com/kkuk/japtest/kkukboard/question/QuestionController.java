@@ -3,6 +3,7 @@ package com.kkuk.japtest.kkukboard.question;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,6 +39,8 @@ public class QuestionController {
 		
 		//List<Question> questionList = questionRepository.findAll(); //모든 질문글 불러오기
 		List<Question> questionList = questionService.getList();
+		//Page<Question> paging = questionService.getList(page);
+		//게시글 10개씩 자른 리스트 -> 페이지당 10개 - 2페이지(11~20)
 		model.addAttribute("questionList", questionList);
 		
 		return "question_list";
