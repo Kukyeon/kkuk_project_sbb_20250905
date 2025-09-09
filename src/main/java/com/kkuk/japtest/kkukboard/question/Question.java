@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.kkuk.japtest.kkukboard.answer.Answer;
+import com.kkuk.japtest.kkukboard.user.SiteUser;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -44,10 +46,14 @@ public class Question {
 	private String content; //질문게시판의 내용
 	
 	
+	
 	private LocalDateTime createdate;
 	
 	//1:N 관계 -> 질문:답변들 -> @OneToMany
 	@OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
 	private List<Answer> answerList;
 	
+	// N:1 관계 -> 질문:작성자 -> @ManyToOne
+	@ManyToOne
+	private SiteUser author;
 }

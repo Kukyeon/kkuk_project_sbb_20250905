@@ -3,6 +3,7 @@ package com.kkuk.japtest.kkukboard.answer;
 import java.time.LocalDateTime;
 
 import com.kkuk.japtest.kkukboard.question.Question;
+import com.kkuk.japtest.kkukboard.user.SiteUser;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -44,5 +45,9 @@ public class Answer {
 	//N:1 관계 - > 답변 : 질문 -> @ManyToOne
 	@ManyToOne
 	private Question question;
+	
+	// N:1 관계 -> 답변:작성자 -> @ManyToOne
+	@ManyToOne
+	private SiteUser author;
 	
 }
