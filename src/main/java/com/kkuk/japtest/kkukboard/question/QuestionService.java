@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kkuk.japtest.kkukboard.DataNotFoundException;
+import com.kkuk.japtest.kkukboard.user.SiteUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,11 +34,12 @@ public class QuestionService {
 		}
 		
 	}
-	public void create(String subject, String content) {
+	public void create(String subject, String content, SiteUser user) {
 		Question question = new Question();
 		question.setSubject(subject);
 		question.setContent(content);
 		question.setCreatedate(LocalDateTime.now());
+		question.setAuthor(user);//글쓴이 추가
 		questionRepository.save(question);
 	}
 	

@@ -1,5 +1,6 @@
 package com.kkuk.japtest.kkukboard.question;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kkuk.japtest.kkukboard.answer.AnswerForm;
+import com.kkuk.japtest.kkukboard.user.SiteUser;
+import com.kkuk.japtest.kkukboard.user.UserService;
 
 import jakarta.validation.Valid;
 
@@ -28,6 +31,8 @@ public class QuestionController {
 	@Autowired
 	private QuestionService questionService;
 	
+	@Autowired
+	private UserService userService;
 	
 	
 	@GetMapping(value = "/list")
@@ -67,7 +72,7 @@ public class QuestionController {
 //		return "redirect:/question/list"; //질문 리스트로 이동->반드시 redirect
 //	}
 	@PostMapping(value = "/create") //질문 내용을 DB에 저장하는 메서드->POST
-	public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {
+	public String questionCreate(@Valid QuestionForm questionForm,Principal principal,BindingResult bindingResult) {
 		//@RequestParam("subject") String subject-> String subject = request.getParameter("subject")
 		//@RequestParam("content") String content-> String content = request.getParameter("content")
 		
@@ -75,7 +80,10 @@ public class QuestionController {
 			return "question_form"; // 에러 발생시 질문등록폼으로 이동
 		}
 		
-		questionService.create(questionForm.getSubject(), questionForm.getContent()); //질문 DB에 등록하기
+		SiteUser siteUser = userService.getUser(principal.getName());
+		// 현재 로그인된 유저의 유저name 으로 entity 가져오기
+		
+		questionService.create(questionForm.getSubject(), questionForm.getContent(),siteUser); //질문 DB에 등록하기
 		
 		return "redirect:/question/list"; //질문 리스트로 이동->반드시 redirect
 	}
