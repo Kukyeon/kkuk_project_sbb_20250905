@@ -43,4 +43,15 @@ public class QuestionService {
 		questionRepository.save(question);
 	}
 	
+	public void modify(Question question ,String subject, String content) { // 질문 글 수정하기
+		question.setSubject(subject);//새로운 제목으로 저장
+		question.setContent(content);//새로운 내용으로 저장
+		question.setModifydate(LocalDateTime.now()); // 수정날자 저장
+		questionRepository.save(question); // 질문 글 수정
+	}
+	
+	public void delete(Question question) {
+		this.questionRepository.delete(question);
+	}
+	
 }

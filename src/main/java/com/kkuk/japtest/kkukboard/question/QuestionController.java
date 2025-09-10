@@ -60,7 +60,7 @@ public class QuestionController {
 		return "question_detail"; //타임리프 html의 이름
 	}
 	
-	@PreAuthorize("isAuthenticated()")
+	
 	@GetMapping(value = "/create") //질문 등록 폼만 매핑해주는 메서드->GET
 	public String questionCreate(QuestionForm questionForm) {
 		return "question_form"; //질문 등록하는 폼 페이지 이름
@@ -75,7 +75,7 @@ public class QuestionController {
 //		
 //		return "redirect:/question/list"; //질문 리스트로 이동->반드시 redirect
 //	}
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("isAuthenticated()") 
 	@PostMapping(value = "/create") //질문 내용을 DB에 저장하는 메서드->POST
 	public String questionCreate(@Valid QuestionForm questionForm,Principal principal,BindingResult bindingResult) {
 		//@RequestParam("subject") String subject-> String subject = request.getParameter("subject")
@@ -92,7 +92,7 @@ public class QuestionController {
 		
 		return "redirect:/question/list"; //질문 리스트로 이동->반드시 redirect
 	}
-	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value = "/modify/{id}")
 	public String questionModify(QuestionForm questionForm ,@PathVariable("id") Integer id, Principal principal) {
 		Question question = questionService.getQuestion(id);//id에 해당하는 entity 반환
@@ -106,7 +106,38 @@ public class QuestionController {
 		questionForm.setSubject(question.getSubject());
 		questionForm.setContent(question.getContent());
 		
-		
 		return "question_form";
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping(value = "/modify/{id}")
+	public String questionModify(@Valid QuestionForm questionForm, BindingResult bindingResult,
+			Principal principal, @PathVariable("id") Integer id) {
+		if(bindingResult.hasErrors()) {
+			return "question_form";
+		}
+		
+		Question question = questionService.getQuestion(id);
+		//글 쓴 유저와 로그인한 유저의 동일여부를 다시 한번 검증
+		if(!question.getAuthor().getUsername().equals(principal.getName())) { // 참이면 수정권한 없음
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정권한이 없습니다.");
+		}
+		
+		questionService.modify(question, questionForm.getSubject(), questionForm.getContent());
+		
+		return String.format("redirect:/question/detail/%s", id);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping(value = "/delete/{id}")
+	public String questionDelete(Principal principal, @PathVariable("id")Integer id) {
+		Question question = questionService.getQuestion(id);
+		if(!question.getAuthor().getUsername().equals(principal.getName())){
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
+		}
+		questionService.delete(question);
+		return "redirect:/";
+	}
+	
+	
 }
