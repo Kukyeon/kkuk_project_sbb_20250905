@@ -1,6 +1,7 @@
 package com.kkuk.japtest.kkukboard.answer;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import com.kkuk.japtest.kkukboard.question.Question;
 import com.kkuk.japtest.kkukboard.user.SiteUser;
@@ -10,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -53,4 +55,7 @@ public class Answer {
 	
 	private LocalDateTime modifydate; //답변글 수정일시
 	
+	
+	@ManyToMany
+	Set<SiteUser> voter;
 }
