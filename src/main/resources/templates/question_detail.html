@@ -33,12 +33,12 @@
                <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span>
                </a>
                
-               <!-- 질문 추천 버튼 -->
+               <!-- 질문 비추천 버튼 -->
 				<a href="javascript:void(0);" 
 				th:data-uri="@{|/question/novote/${question.id}|}" 
                class="notrecommend btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()">
                비추천
-               <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.novoter)}"></span>
+               <span class="badge rounded-pill bg-danger" th:text="${#lists.size(question.novoter)}"></span>
                </a>
 				
 				<!-- 수정 버튼 -->
@@ -92,12 +92,12 @@
                			<span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voter)}"></span>
               			 </a>
               			 
-              			 <!-- 답변 추천 버튼 -->
+              			 <!-- 답변 비추천 버튼 -->
 						<a href="javascript:void(0);" 
 						th:data-uri="@{|/answer/novote/${answer.id}|}" 
               			 class="notrecommend btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()">
-              			 추천
-               			<span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.novoter)}"></span>
+              			 비추천
+               			<span class="badge rounded-pill bg-danger" th:text="${#lists.size(answer.novoter)}"></span>
               			 </a>
 				
 						<!--답변 수정 버튼 -->
