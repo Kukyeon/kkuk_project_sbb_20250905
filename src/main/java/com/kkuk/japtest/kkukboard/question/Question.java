@@ -56,4 +56,6 @@ public class Question {
 	// N:1 관계 -> 질문:작성자 -> @ManyToOne
 	@ManyToOne
 	private SiteUser author;
+	
+	private LocalDateTime modifydate; //질문글 수정일시
 }

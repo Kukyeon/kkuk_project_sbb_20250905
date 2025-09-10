@@ -50,4 +50,7 @@ public class Answer {
 	@ManyToOne
 	private SiteUser author;
 	
+	
+	private LocalDateTime modifydate; //답변글 수정일시
+	
 }

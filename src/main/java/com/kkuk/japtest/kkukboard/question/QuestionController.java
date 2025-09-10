@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.kkuk.japtest.kkukboard.answer.AnswerForm;
 import com.kkuk.japtest.kkukboard.user.SiteUser;
@@ -89,5 +91,22 @@ public class QuestionController {
 		questionService.create(questionForm.getSubject(), questionForm.getContent(),siteUser); //질문 DB에 등록하기
 		
 		return "redirect:/question/list"; //질문 리스트로 이동->반드시 redirect
+	}
+	
+	@GetMapping(value = "/modify/{id}")
+	public String questionModify(QuestionForm questionForm ,@PathVariable("id") Integer id, Principal principal) {
+		Question question = questionService.getQuestion(id);//id에 해당하는 entity 반환
+		
+		//글 쓴 유저와 로그인한 유저의 동일여부를 다시 한번 검증
+		if(!question.getAuthor().getUsername().equals(principal.getName())) { // 참이면 수정권한 없음
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"수정권한이 없습니다.");
+		}
+		//question_form에 questionForm의 subject와 content를 value로 출력하는 기능이 이미 있으므로
+		//해당 폼을 재활ㅇ룡하기 위해 questionForm에 question의 필드값을 저장하여 전송
+		questionForm.setSubject(question.getSubject());
+		questionForm.setContent(question.getContent());
+		
+		
+		return "question_form";
 	}
 }
