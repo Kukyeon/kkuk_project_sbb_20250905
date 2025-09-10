@@ -54,5 +54,10 @@ public class QuestionService {
 		this.questionRepository.delete(question);
 	}
 	
-	
+	public void vote(Question question, SiteUser siteUser) { //-> UPDATE 문으로 만들어줘야함
+		question.getVoter().add(siteUser);
+		//question->추천을 받은 글의 번호로 조회한 질문 엔티티
+		// question의 멤버인 voter를 get 하여 voter에 추천을 누른 유저의 엔티티를 추가해줌
+		questionRepository.save(question);
+	}
 }

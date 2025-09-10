@@ -92,5 +92,18 @@ public class AnswerController {
 		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId()) ;
 	}
 	
-
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping(value = "/vote/{id}")
+	public String answerVote(@PathVariable("id")Integer id, Principal principal) {
+		
+		Answer answer = answerService.getAnswer(id);
+		
+		SiteUser siteUser = userService.getUser(principal.getName());
+		
+		answerService.vote(answer, siteUser);
+		
+		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+		//해당 답변이 달린 원글로 이동
+	}
+	
 }
