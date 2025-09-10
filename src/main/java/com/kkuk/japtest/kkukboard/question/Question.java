@@ -63,4 +63,6 @@ public class Question {
 	
 	@ManyToMany
 	Set<SiteUser> voter;
+	
+	private Integer hit = 0; // 작성글 조회수
 }

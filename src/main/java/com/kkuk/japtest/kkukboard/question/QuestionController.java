@@ -54,6 +54,7 @@ public class QuestionController {
 	@GetMapping(value = "/detail/{id}") //파라미터이름 없이 값만 넘어왔을때 처리
 	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
 		
+		questionService.hit(id);
 		//service에 3을 넣어서 호출
 		Question question = questionService.getQuestion(id);
 		model.addAttribute("question", question);
@@ -151,5 +152,6 @@ public class QuestionController {
 		
 		return String.format("redirect:/question/detail/%s", id);
 	}
+	
 	
 }
