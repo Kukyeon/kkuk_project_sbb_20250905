@@ -40,4 +40,8 @@ public class AnswerService {
 		answer.setModifydate(LocalDateTime.now()); //답변 수정일시
 		answerRepository.save(answer);
 	}
+	
+	public void delete(Answer answer) {
+		answerRepository.delete(answer);
+	}
 }

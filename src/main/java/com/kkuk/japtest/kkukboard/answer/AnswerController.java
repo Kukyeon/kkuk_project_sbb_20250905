@@ -53,7 +53,7 @@ public class AnswerController {
 	}
 	
 	@PreAuthorize("isAuthenticated()")
-	@GetMapping(value = "/modify/{id}")
+	@GetMapping(value = "/modify/{id}") // 답변 수정하기 위해 띄워주는 폼
 	public String answerModify(AnswerForm answerForm ,@PathVariable("id")Integer id, Principal principal) {
 		Answer answer = answerService.getAnswer(id);
 		if(!answer.getAuthor().getUsername().equals(principal.getName())){
@@ -62,5 +62,35 @@ public class AnswerController {
 		answerForm.setContent(answer.getContent());
 		return "answer_form";
 	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@PostMapping(value = "/modify/{id}") // 답변 수정하기 위한 요청
+	public String answerModify(@Valid AnswerForm answerForm, BindingResult bindingResult ,@PathVariable("id")Integer id, Principal principal) {
+		if(bindingResult.hasErrors()) {
+			return "answer_form";
+		}
+		Answer answer = answerService.getAnswer(id);
+		if(!answer.getAuthor().getUsername().equals(principal.getName())){
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
+		}
+		
+		answerService.modify(answer, answerForm.getContent()); // 수정완료
+		
+		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+		// redirect 는 부모글(답변이 달린 질문글)의 번호로 이동
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping(value = "/delete/{id}")
+	public String answerDelete(Principal principal, @PathVariable("id")Integer id) {
+		Answer answer = answerService.getAnswer(id);
+		
+		if(!answer.getAuthor().getUsername().equals(principal.getName())){
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
+		}
+		answerService.delete(answer);
+		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId()) ;
+	}
+	
 
 }
