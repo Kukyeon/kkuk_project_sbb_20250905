@@ -58,4 +58,7 @@ public class Answer {
 	
 	@ManyToMany
 	Set<SiteUser> voter;
+	
+	@ManyToMany
+	Set<SiteUser> novoter;
 }

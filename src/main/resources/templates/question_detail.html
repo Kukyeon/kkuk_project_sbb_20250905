@@ -32,6 +32,14 @@
                추천
                <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span>
                </a>
+               
+               <!-- 질문 추천 버튼 -->
+				<a href="javascript:void(0);" 
+				th:data-uri="@{|/question/novote/${question.id}|}" 
+               class="notrecommend btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()">
+               비추천
+               <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.novoter)}"></span>
+               </a>
 				
 				<!-- 수정 버튼 -->
                <a th:href="@{|/question/modify/${question.id}|}" 
@@ -83,6 +91,14 @@
               			 추천
                			<span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voter)}"></span>
               			 </a>
+              			 
+              			 <!-- 답변 추천 버튼 -->
+						<a href="javascript:void(0);" 
+						th:data-uri="@{|/answer/novote/${answer.id}|}" 
+              			 class="notrecommend btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()">
+              			 추천
+               			<span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.novoter)}"></span>
+              			 </a>
 				
 						<!--답변 수정 버튼 -->
 		               <a th:href="@{|/answer/modify/${answer.id}|}" 
@@ -126,6 +142,14 @@
 	   Array.from(recommend_elements).forEach(function (element) {
 	      element.addEventListener('click', function () {
 	         if (confirm("정말로 추천하시겠습니까?")) {
+	            location.href = this.dataset.uri;
+	         };
+	      });
+	   });
+	   const notrecommend_elements = document.getElementsByClassName("notrecommend");
+	   Array.from(notrecommend_elements).forEach(function (element) {
+	      element.addEventListener('click', function () {
+	         if (confirm("정말로 비추천하시겠습니까?")) {
 	            location.href = this.dataset.uri;
 	         };
 	      });

@@ -51,4 +51,11 @@ public class AnswerService {
 		// answer의 멤버인 voter를 get 하여 voter에 추천을 누른 유저의 엔티티를 추가해줌
 		answerRepository.save(answer);
 	}
+	
+	public void novote(Answer answer, SiteUser siteUser) { //-> UPDATE 문으로 만들어줘야함
+		answer.getNovoter().add(siteUser);
+		//answer->추천을 받은 글의 번호로 조회한 질문 엔티티
+		// answer의 멤버인 voter를 get 하여 voter에 추천을 누른 유저의 엔티티를 추가해줌
+		answerRepository.save(answer);
+	}
 }

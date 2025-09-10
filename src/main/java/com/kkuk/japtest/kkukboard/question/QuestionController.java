@@ -153,5 +153,18 @@ public class QuestionController {
 		return String.format("redirect:/question/detail/%s", id);
 	}
 	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping(value = "/novote/{id}")
+	public String questionNotVote(@PathVariable("id")Integer id, Principal principal) {
+		
+		Question question = questionService.getQuestion(id);
+		
+		SiteUser siteUser = userService.getUser(principal.getName());
+		
+		questionService.novote(question, siteUser);
+		
+		return String.format("redirect:/question/detail/%s", id);
+	}
+	
 	
 }

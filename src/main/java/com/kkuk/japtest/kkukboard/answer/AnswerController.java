@@ -106,4 +106,18 @@ public class AnswerController {
 		//해당 답변이 달린 원글로 이동
 	}
 	
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping(value = "/novote/{id}")
+	public String answerNotVote(@PathVariable("id")Integer id, Principal principal) {
+		
+		Answer answer = answerService.getAnswer(id);
+		
+		SiteUser siteUser = userService.getUser(principal.getName());
+		
+		answerService.novote(answer, siteUser);
+		
+		return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+		//해당 답변이 달린 원글로 이동
+	}
+	
 }
