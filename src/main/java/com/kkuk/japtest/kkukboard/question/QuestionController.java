@@ -38,18 +38,22 @@ public class QuestionController {
 	private UserService userService;
 	
 	
-	@GetMapping(value = "/list")
+	@GetMapping(value = "/list") // 페이징 된 리스트
 	//@ResponseBody
-	public String list(Model model) {
+	public String list(Model model, @RequestParam(value = "page", defaultValue = "0")int page) {
+		
+		int pageSize = 10;
 		
 		//List<Question> questionList = questionRepository.findAll(); //모든 질문글 불러오기
-		List<Question> questionList = questionService.getList();
-		//Page<Question> paging = questionService.getList(page);
+		//List<Question> questionList = questionService.getList();
+		Page<Question> paging = questionService.getPageQuestion(page);
 		//게시글 10개씩 자른 리스트 -> 페이지당 10개 - 2페이지(11~20)
-		model.addAttribute("questionList", questionList);
+		model.addAttribute("paging", paging);
 		
 		return "question_list";
 	}	
+	
+	
 	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value = "/detail/{id}") //파라미터이름 없이 값만 넘어왔을때 처리
 	public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {

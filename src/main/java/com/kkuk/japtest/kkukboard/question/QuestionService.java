@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.kkuk.japtest.kkukboard.DataNotFoundException;
@@ -74,6 +77,21 @@ public class QuestionService {
 		
 		questionRepository.updateHit(id);
 		
+	}
+	
+	public Page<Question> getPageQuestion(int page){
+		int size = 10; // 1페이지당 보여줄 갯수 
+		
+		int startRow = page * size;
+		int endRow = startRow + size;
+		
+		List<Question> pageQuestionList = questionRepository.findQuestionsWithPaging(startRow, endRow);
+		
+		long totalQuestion = questionRepository.count(); // 모든 글 갯수가져오기
+		
+		Page<Question> pagingList = new PageImpl<>(pageQuestionList, PageRequest.of(page, size), totalQuestion);
+		
+		return pagingList;
 	}
 	
 	
