@@ -40,16 +40,17 @@ public class QuestionController {
 	
 	@GetMapping(value = "/list") // 페이징 된 리스트
 	//@ResponseBody
-	public String list(Model model, @RequestParam(value = "page", defaultValue = "0")int page) {
+	public String list(Model model, @RequestParam(value = "page", defaultValue = "0")int page,
+			@RequestParam(value = "kw", defaultValue = "")String kw ) {
 		
 		int pageSize = 10;
 		
 		//List<Question> questionList = questionRepository.findAll(); //모든 질문글 불러오기
 		//List<Question> questionList = questionService.getList();
-		Page<Question> paging = questionService.getPageQuestion(page);
+		Page<Question> paging = questionService.getPageQuestion(page, kw);
 		//게시글 10개씩 자른 리스트 -> 페이지당 10개 - 2페이지(11~20)
 		model.addAttribute("paging", paging);
-		
+		model.addAttribute("kw", kw);
 		return "question_list";
 	}	
 	

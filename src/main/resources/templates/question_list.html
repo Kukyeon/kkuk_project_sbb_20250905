@@ -1,6 +1,18 @@
 <html layout:decorate="~{layout}">
 	<div layout:fragment="content" class="container my-3">
-	<a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
+	<div class="row my-3">
+		<div class="col-6">
+			<a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
+		</div>
+		<div class="col-6">
+			<div class="input-group">
+				<form th:action="@{/question/list}">
+					<input type="text" name="kw" id="search_kw" class="form-controle" th:value="${kw}">
+					<button class="btn btn-outline-secondary" type="button" id="btn_search">찾기</button>
+				</form>
+			</div>
+		</div>
+	</div>
 	<table class="table">
 		<thead class="table-dark">
 			<tr class="text-center">
@@ -35,7 +47,7 @@
 	<div th:if="${!paging.isEmpty()}"> <!-- paging 객체 내에 글이 존재하면 침 -->
 		<ul class="pagination justify-content-center">
 			<li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
-				<a class="page-link" th:href="@{|?page=${paging.number-1}|}">
+				<a class="page-link" href="javascript:void(0);" th:data-page="${paging.number-1}">
 					<span>이전</span>
 				</a>
 			</li>
@@ -44,12 +56,12 @@
 			<li th:each="page: ${#numbers.sequence(0, paging.totalPages-1)}" 
 			th:if="${page >= paging.number-5 and page <= paging.number+5}" 
 			th:classappend="${page == paging.number} ? 'active'" class="page-item">
-				<a th:text="${page+1}" class="page-link" th:href="@{|?page=${page}|}">페이지</a>
+				<a th:text="${page+1}" class="page-link" href="javascript:void(0);" th:data-page="${page}">페이지</a>
 			</li>
 		<!-- 페이지 표시 -->
 		<!-- 페이지 다음처리 -->	
 			<li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
-				<a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+				<a class="page-link" href="javascript:void(0);" th:data-page="${paging.number+1}">
 					<span>다음</span>
 				</a>
 			</li>	
@@ -57,5 +69,28 @@
 		</ul>
 	</div>
 	<!-- 페이징 처리 끝 -->
+	<form th:action="@{/question/list}" method="get" id="searchForm">
+		<input type="hidden" id="page" name="page" th:value="${paging.number}">
+		<input type="hidden" id="kw" name="kw" th:value="${kw}">
+	</form>
 	</div>
+	<script layout:fragment="script" type="text/javascript">
+		//페이지 번호 전송시 -> kw(검색어) 도 함께 전송하기 위한 자바스크립트
+		const page_elements = document.getElementsByClassName("page-link");
+		   Array.from(page_elements).forEach(function (element) {
+		      element.addEventListener('click', function () {
+		         document.getElementById('page').value = this.dataset.page;
+		         document.getElementById('searchForm').submit();
+		      });
+		   });
+		// 검색어와 페이지 번호를 함께 전송하기 위한 자바스크립트
+	   const btn_elements = document.getElementById("btn_search");
+	   	  btn_search.addEventListener('click',function () {
+	         document.getElementById('kw').value = document.getElementById('search_kw').value;
+	         document.getElementById('page').value = 0
+	         document.getElementById('searchForm').submit();
+	      });
+	     
+	</script>
+	
 </html>
