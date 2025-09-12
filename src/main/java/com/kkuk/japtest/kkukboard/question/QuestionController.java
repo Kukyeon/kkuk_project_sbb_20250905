@@ -66,7 +66,7 @@ public class QuestionController {
 		return "question_detail"; //타임리프 html의 이름
 	}
 	
-	
+	@PreAuthorize("isAuthenticated()")
 	@GetMapping(value = "/create") //질문 등록 폼만 매핑해주는 메서드->GET
 	public String questionCreate(QuestionForm questionForm) {
 		return "question_form"; //질문 등록하는 폼 페이지 이름
